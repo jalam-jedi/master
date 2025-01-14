@@ -1,0 +1,91 @@
+{% extends "basic.html" %}
+
+{% block body %}
+    <h1>Select Two Images for Comparison</h1>  
+
+    <form action="/comparison" method="POST">
+        <div class="dropdown-container">
+            <label for="image1">Select First Image:</label>
+            <select name="image1" id="image1" class="dropdown" required>
+                <option value="">--Select Image--</option>
+                {% for image in images_data %}
+                    <option value="{{ image.ImageID }}">{{ image.Name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="dropdown-container">
+            <label for="image2">Select Second Image:</label>
+            <select name="image2" id="image2" class="dropdown" required>
+                <option value="">--Select Image--</option>
+                {% for image in images_data %}
+                    <option value="{{ image.ImageID }}">{{ image.Name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="submit-btn">Compare</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if image1 and image2 %}
+    
+    <h2>Comparison Results</h2>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>{{ image1.Name }}</th>
+                <th>{{ image2.Name }}</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+
+            <!-- Image Row -->
+            <tr>
+                <td><strong>Image</strong></td>
+                <td>
+                    <img src="{{ url_for('static', filename='Images/' + image1.ImagePath) }}" alt="{{ image1.Name }}">
+                </td>
+                <td>
+                    <img src="{{ url_for('static', filename='Images/' + image2.ImagePath) }}" alt="{{ image2.Name }}">
+                </td>
+            </tr>
+
+            <!-- Location Type -->
+            <tr>
+                <td><strong>Location Type</strong></td>
+                <td>{{ image1.Location_Type }}</td>
+                <td>{{ image2.Location_Type }}</td>
+            </tr>
+
+            <!-- Unique Feature -->
+            <tr>
+                <td><strong>Unique Feature</strong></td>
+                <td>{{ image1.Unique_Feature }}</td>
+                <td>{{ image2.Unique_Feature }}</td>
+            </tr>
+
+            <!-- Geographical Feature -->
+            <tr>
+                <td><strong>Geographical Feature</strong></td>
+                <td>{{ image1.Geographical_Feature }}</td>
+                <td>{{ image2.Geographical_Feature }}</td>
+            </tr>
+
+            <!-- Climate -->
+            <tr>
+                <td><strong>Climate</strong></td>
+                <td>{{ image1.Climate }}</td>
+                <td>{{ image2.Climate }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+
+
+{% endblock %}

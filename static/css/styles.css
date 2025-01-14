@@ -1,0 +1,356 @@
+body {
+   margin: 10px; /* Specify unit for margin */
+   padding: 20px; /* Add padding for better spacing */
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+   line-height: 1.6; /* Improve readability with line spacing */
+   background-color: #f9f9f9; /* Add a light background color */
+   color: #2d2c2c; /* Set a dark gray text color for better contrast */
+}
+/* Style for the centered h1 */
+.center {
+   text-align: center; /* Center the text */
+   font-size: 3em; /* Increase the font size */
+   font-family: 'Arial', sans-serif; /* Set a clean, modern font */
+   color: #2c3e50; /* Darker, more elegant text color */
+   text-transform: uppercase; /* Make the text uppercase */
+   letter-spacing: 2px; /* Add space between letters for a bold look */
+   padding: 20px; /* Add some space around the text */
+   background-color: #f0f4f8; /* Soft, subtle background color */
+   border-radius: 10px; /* Round the corners of the background */
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+   margin-top: 40px; /* Add space above the header */
+}
+
+
+table {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+
+th, td {
+   padding: 8px;
+   text-align: left;
+}
+
+th {
+   background-color: #f2f2f2;
+}
+img {
+   max-width: 300px;      /* Set a constant maximum width for the images */
+   height: auto;          /* Maintain the aspect ratio of the images */
+   border-radius: 15px;   /* Rounded corners */
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow to make the image pop */
+   margin: 10px;          /* Add space around the image */
+   display: block;        /* Ensure images are block-level elements */
+   margin-left: auto;     /* Center image horizontally */
+   margin-right: auto;
+}
+
+/* General styles for the navigation */
+#navigation {
+    background-color: #333; /* Dark background */
+    padding: 10px 0; /* Padding around the navigation bar */
+    font-family: Arial, sans-serif; /* Font for navigation items */
+    text-align: center; /* Center the text inside the nav */
+}
+
+.gis-info a {
+   text-decoration: none; /* Removes the blue underline from links */
+}
+
+.gis-info a:hover {
+   text-decoration: underline; /* Optional: add underline on hover for better interaction */
+}
+.gis-entry {
+   display: flex;          /* Use flexbox to align the image and text side by side */
+   align-items: center;    /* Vertically align the image and text */
+   margin-bottom: 20px;    /* Add space between each entry */
+   padding: 10px;          /* Add padding inside each entry */
+   background-color: #f4f4f4; /* Light gray background */
+   border-radius: 10px;    /* Rounded corners for each entry */
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.gis-image {
+   flex: 1;                /* Allow the image to take up 1 part of the space */
+   max-width: 200px;       /* Limit the image width to 200px */
+   margin-right: 20px;     /* Add space between image and text */
+}
+
+.gis-image img {
+   width: 100%;            /* Make the image fit within its container */
+   height: auto;           /* Maintain the aspect ratio */
+   border-radius: 10px;    /* Rounded corners for the image */
+}
+
+.gis-info {
+   flex: 2;                /* Allow the text to take up 2 parts of the space */
+}
+
+.gis-info h3 {
+   font-size: 1.5em;       /* Increase the font size of the heading */
+   font-family: 'Arial', sans-serif; /* Clean and modern font */
+   color: #333;            /* Dark text color */
+   margin-bottom: 10px;    /* Add space below the heading */
+   text-transform: capitalize; /* Make the first letter of each word uppercase */
+}
+
+.gis-info p {
+   font-size: 1em;         /* Set a consistent font size for paragraphs */
+   color: #555;            /* Slightly lighter color for the text */
+   margin: 5px 0;          /* Add space between paragraphs */
+}
+
+.gis-info strong {
+   color: #000;            /* Make the labels bold */
+}
+
+#navigation {
+   background-color: #333; /* Dark background color for the nav box */
+   padding: 10px 20px; /* Padding around the navigation items */
+   border-radius: 15px; /* Round the corners of the navigation box */
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+}
+
+#navigation ul {
+   list-style-type: none; 
+   margin: 0;
+   padding: 0;
+   display: flex; /* Using flexbox for even alignment of items */
+   justify-content: center; /* Center the navigation items */
+}
+
+/* Style for each list item */
+#navigation ul li {
+   margin: 0 20px; /* Add spacing between items */
+}
+
+/* Style for the links */
+#navigation ul li a {
+   color: #fff; /* White text color */
+   text-decoration: none; /* Remove underline */
+   font-size: 18px; /* Font size for links */
+   padding: 10px 20px; /* Padding around the text */
+   border-radius: 5px; /* Rounded corners for the links */
+   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for links */
+#navigation ul li a:hover {
+   background-color: #575757; /* Change background color when hovering */
+   color: #ffcc00; /* Change text color when hovering */
+}
+
+/* Active link (highlight the current page) */
+#navigation ul li a.active {
+   background-color: #ffcc00; /* Active link gets yellow background */
+   color: #333; /* Dark text color */
+}
+
+
+form {
+   max-width: 600px;
+   margin: 20px auto;
+   padding: 20px;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+   background-color: #f9f9f9;
+}
+
+.dropdown-container {
+   margin-bottom: 15px;
+}
+
+label {
+   display: block;
+   font-weight: bold;
+   margin-bottom: 5px;
+}
+
+.dropdown {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+}
+
+.submit-btn {
+   width: 100%;
+   padding: 10px;
+   background-color: #3498db;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+.submit-btn:hover {
+   background-color: #2980b9;
+}
+
+.comparison-container {
+   display: flex;
+   justify-content: space-around;
+   margin-top: 20px;
+}
+
+
+
+
+
+p {
+   margin: 5px 0;
+}
+
+.error {
+   color: red;
+   text-align: center;
+   font-weight: bold;
+}
+.image-details {
+   width: 45%;
+   padding: 25px;  /* Increased padding for more space */
+   border: 1px solid #ddd;
+   border-radius: 10px;
+   background-color: #f4f4f4;
+   font-size: 1.2em;  /* Increase font size for better readability */
+   line-height: 1.8;  /* Adjust line height for better spacing between lines */
+}
+
+.image-details h3 {
+   font-size: 2em;  /* Increase the font size of the image name */
+   color: #34495e;  /* Ensure the title color is still readable */
+   margin-bottom: 20px;  /* Add more space after the title */
+}
+
+.image-details p {
+   font-size: 1.1em;  /* Increase font size for the paragraphs */
+   color: #555;  /* Maintain contrast with the background */
+   margin: 10px 0;  /* Add space between paragraphs */
+}
+
+.image-details img {
+   width: 100%;
+   height: auto;
+   border-radius: 15px;  /* More rounded corners */
+   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);  /* Slightly bigger shadow for depth */
+   margin-bottom: 15px;  /* More space below the image */
+}
+.comparison-table {
+   width: 100%;
+   border-collapse: collapse;
+   margin-top: 20px;
+}
+
+.comparison-table th, .comparison-table td {
+   padding: 15px;
+   text-align: center;
+   border: 1px solid #ddd;
+}
+
+.comparison-table th {
+   background-color: #f2f2f2;
+   font-size: 1.2em;
+}
+
+.comparison-table td {
+   font-size: 1.1em;
+   color: #555;
+}
+
+.comparison-table tr:nth-child(even) {
+   background-color: #f9f9f9;
+}
+
+.comparison-table tr:hover {
+   background-color: #f1f1f1;
+}
+
+.comparison-table td strong {
+   color: #333;
+}
+
+.comparison-table img {
+   max-width: 300px;  /* Limit image width */
+   height: auto;      /* Maintain aspect ratio */
+   border-radius: 10px; /* Rounded corners for the image */
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+   margin-top: 10px;   /* Space above the image */
+}
+#about_us {
+   padding: 40px;
+   background-color: #f9f9f9; /* Light background color */
+   border-radius: 10px; /* Rounded corners */
+   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+   margin-top: 40px; /* Space at the top */
+}
+
+#about_us h2 {
+   text-align: center; /* Center the heading */
+   font-size: 2.5em;
+   color: #2c3e50; /* Elegant dark color */
+   margin-bottom: 20px; /* Space below the heading */
+   font-family: 'Arial', sans-serif; /* Clean font */
+}
+
+#about_us p {
+   font-size: 1.2em; /* Larger text for better readability */
+   line-height: 1.6; /* Increased line height */
+   color: #333; /* Dark text color */
+   margin-bottom: 20px; /* Space between paragraphs */
+   font-family: 'Georgia', serif; /* Serif font for a more formal look */
+}
+
+#about_us ul {
+   list-style-type: none; /* Remove default list style */
+   padding: 0;
+   font-size: 1.1em; /* Slightly larger font for the list */
+   color: #555; /* Slightly lighter color for the list items */
+}
+
+#about_us ul li {
+   padding: 10px;
+   margin: 10px 0; /* Space between items */
+   background-color: #fff; /* White background for list items */
+   border-radius: 8px; /* Rounded corners */
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+   transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+}
+
+#about_us ul li:hover {
+   background-color: #ecf0f1; /* Light gray on hover */
+   transform: translateY(-5px); /* Lift the item on hover */
+}
+
+#about_us ul li strong {
+   font-weight: bold;
+   color: #3498db; /* Blue color for names */
+}
+
+#about_us ul li:nth-child(odd) {
+   background-color: #f4f4f4; /* Alternate background color for odd items */
+}
+
+@media screen and (max-width: 768px) {
+   #about_us {
+       padding: 20px; /* Less padding on smaller screens */
+   }
+
+   #about_us h2 {
+       font-size: 2em; /* Smaller heading size on mobile */
+   }
+
+   #about_us p {
+       font-size: 1em; /* Adjust font size for mobile */
+   }
+
+   #about_us ul li {
+       font-size: 1em; /* Adjust list font size */
+   }
+}
+

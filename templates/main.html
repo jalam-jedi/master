@@ -1,0 +1,56 @@
+{% extends "basic.html" %}
+{% block body %}
+<h1 class="center" id="#home">
+    California's Wonders
+</h1>
+<nav id="navigation">
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#wonders">Wonders</a></li>
+        <li><a href="/comparison">Comparison</a></li>
+        <li><a href="#about_us">About Us</a></li>
+    </ul>
+</nav>
+
+
+<div>
+    <h2 id="wonders">Here are 5 of California's Wonders</h2>
+    {% for data in gis_data %}
+    <div class="gis-entry">
+        <!-- Display the image from ImagePath -->
+        <div class="gis-image">
+            <img src="{{ url_for('static', filename='Images/' + data.ImagePath) }}" alt="{{ data.Name }}">
+        </div>
+        
+        <!-- Display other attributes to the right of the image -->
+        <div class="gis-info">
+            <a href="/image/{{ data.ID }}">
+                <h3>{{ data.Name }}</h3>
+            </a>
+            <p><strong>Latitude:</strong> {{ data.Latitude }}</p>
+            <p><strong>Longitude:</strong> {{ data.Longitude }}</p>
+            <p><strong>Comments:</strong> {{ data.Comments }}</p>
+            <p><strong>Source:</strong> {{ data.Source }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+<div id="about_us">
+    <h2>About Us</h2>
+    <p>Welcome to "California's Wonders," an interactive exploration of some of the most iconic locations in California. This project was designed and developed as a collaboration between a few passionate individuals:</p>
+    
+    <ul>
+        <li><strong>Jawad Alam</strong>: Backend and frontend work. Jawad took on the challenge of creating a seamless user experience by combining strong backend logic and intuitive frontend design.</li>
+        <li><strong>Muhammad Kaif Malik</strong>: Research and UI designer. Kaif's contributions were pivotal in ensuring the project is both visually appealing and easy to navigate, with a focus on user interface design.</li>
+        <li><strong>Shaheer</strong>: Research data provider. Shaheer gathered and provided the key data, offering valuable insights into the geographical and cultural features of California's wonders.</li>
+    </ul>
+
+    <p>Through this project, we aim to share the beauty and diversity of California’s remarkable natural and man-made wonders, while offering users a meaningful way to explore them. Thank you for visiting and exploring with us!</p>
+</div>
+
+
+
+
+{% endblock %}
