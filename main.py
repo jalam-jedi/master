@@ -1,92 +1,13 @@
-from flask import Flask, url_for, redirect,request, render_template
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from flask_migrate import Migrate
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
-from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField, DecimalField, DateField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange, InputRequired, IPAddress, IPAddress, ValidationError
-from flask_bcrypt import Bcrypt
+from extensions import *
+from dbclasses import *
+from viewmodels import *
 
-app= Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///gis.db' 
-db =SQLAlchemy(app)
-migrate = Migrate(app, db)
-app.config['SECRET_KEY'] = '60029032.comQWERTY'
-bcrypt = Bcrypt(app)
-
-login_manager= LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+admin.add_view(UserModelView(User, db.session))
+admin.add_view(CommentModelView(Comment, db.session))
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
-#Register Form
-class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)] ,render_kw={"placeholder":"Username"})
-    
-    email = StringField('Username', validators=[DataRequired(), Length(min=4, max=40 )] ,render_kw={"placeholder":"Email"})
-    
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)] , render_kw={"placeholder":"Password"})
-
-    submit = SubmitField("Register")
-
-    def validate_username(self, username):
-        existing_username = User.query.filter_by(username=username.data).first()
-
-        if existing_username:
-            raise ValidationError('Username already exists . Please choose a different username')
-    
-#Login Form
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder":"Username"})
-
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
-
-    submit = SubmitField("Log In")
-
-
-#User Info Database
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
-
-#Main Web Databse
-class GIS_Model(db.Model):
-    ID = db.Column(db.Integer, primary_key=True)
-    ImagePath= db.Column(db.String(2000),nullable =False)
-    Name = db.Column(db.String(100),nullable =False)
-    Latitude =db.Column(db.Float(20),nullable=False)
-    Longitude = db.Column(db.Float,nullable=False)
-    Comments = db.Column(db.String(1000),nullable=True)
-    Source =db.Column(db.String(50),nullable=True)
-    Date =db.Column(db.DateTime,default =datetime.utcnow)
-
-#Image Detail Databse
-class COMP_Model(db.Model):
-    ImageID= db.Column(db.Integer,primary_key=True)
-    ImagePath= db.Column(db.String(2000),nullable =False)
-    Name = db.Column(db.String(100),nullable =False)
-    Hist_Relevance =db.Column(db.String(500),nullable=False)
-    Mod_Imp= db.Column(db.String(500),nullable=False)
-    Comp_Analysis =db.Column(db.String(500),nullable=False)
-    Insight= db.Column(db.String(500),nullable=False)
-
-#Comaprison Databse
-class ANALYSIS_Model(db.Model):
-    ImageID = db.Column(db.Integer, primary_key=True)
-    ImagePath = db.Column(db.String(2000), nullable=False)
-    Name = db.Column(db.String(100), nullable=False)
-    Location_Type = db.Column(db.String(500), nullable=False)
-    Unique_Feature = db.Column(db.String(500), nullable=False)
-    Geographical_Feature = db.Column(db.String(500), nullable=False)
-    Climate = db.Column(db.String(500), nullable=False)
-
 
 #Main Page
 @app.route('/',methods=['Post','Get'])
@@ -106,6 +27,8 @@ def login():
         if user:
             bcrypt.check_password_hash(user.password,form.password.data)
             login_user(user)
+            if user.is_admin:
+                return redirect(url_for('admin.index'))
             return redirect('/')
     return render_template('login.html',form=form)
 

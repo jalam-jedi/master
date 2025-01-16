@@ -1,14 +1,17 @@
 {% extends "basic.html" %}
-
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static',filename = 'css/formstyles.css') }}">
+{% endblock %}
 {% block body %}
-<h1>Register Page</h1>
-<form method="post" action="">
-    {{form.hidden_tag()}}
-    {{form.username}}
-    {{form.email}}
-    {{form.password}}
-    {{form.submit}}
-</form>
-
-<a href="/login">Already have a account? Log In</a>
+<h1>Register Now</h1>
+<div class="form-container">
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username }}
+        {{ form.email }}
+        {{ form.password }}
+        {{ form.submit }}
+    </form>
+    <a href="/login">Lready have an account? Log In</a>
+</div>
 {% endblock %}

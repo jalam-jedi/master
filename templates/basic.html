@@ -7,11 +7,11 @@
     <meta name="author" content="Your Name">
     <meta name="keywords" content="GIS, online, comparison, pictures">
     <title>California's Wonders</title>
-   
+   {% block style %}
 
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static',filename = 'css/styles.css') }}">
-
+    {% endblock %}
 </head>
 <body>
     {% block body %}{% endblock %}
