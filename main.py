@@ -46,12 +46,52 @@ def register_page():
     return render_template('register.html',form=form )
 
 #Image Details Page
-@app.route('/image/<int:image_id>')
+@app.route('/image/<int:image_id>', methods=['GET', 'POST'])
 @login_required
 def image_detail(image_id):
     # Query the COMP_Model table for the image with the given ID
     image = COMP_Model.query.get_or_404(image_id)
-    return render_template('image_detail.html', image=image)
+
+    if request.method == 'POST':
+        # Handle main comment submission
+        if request.form.get('action') == 'add_comment':
+            content = request.form.get('content')
+            if content:
+                new_comment = Comment(
+                    content=content,
+                    image_id=image_id,
+                    user_id=current_user.id,
+                    is_reply=False,
+                    created_at=datetime.utcnow()
+                )
+                db.session.add(new_comment)
+                db.session.commit()
+                return jsonify({'status': 'success', 'message': 'Comment added successfully.'}), 200
+
+        # Handle reply submission
+        elif request.form.get('action') == 'add_reply':
+            content = request.form.get('content')
+            reply_id = request.form.get('reply_id')
+            if content and reply_id:
+                new_reply = Comment(
+                    content=content,
+                    image_id=image_id,
+                    user_id=current_user.id,
+                    is_reply=True,
+                    reply_id=int(reply_id),
+                    created_at=datetime.utcnow()
+                )
+                db.session.add(new_reply)
+                db.session.commit()
+                return jsonify({'status': 'success', 'message': 'Reply added successfully.'}), 200
+
+    # For GET requests, retrieve comments and replies
+    comments = (
+        Comment.query.filter_by(image_id=image_id, is_reply=False)
+        .order_by(Comment.created_at.desc())
+        .all()
+    )
+    return render_template('image_detail.html', image=image, comments=comments)
 
 #Comparison Page
 @app.route("/comparison", methods=['POST', 'GET'])

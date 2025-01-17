@@ -1,5 +1,6 @@
 from extensions import *
 
+#--------------------------------------------------------------------------------------------------------------------------------------
 #Register Form
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)] ,render_kw={"placeholder":"Username"})
@@ -15,8 +16,12 @@ class RegisterForm(FlaskForm):
 
         if existing_username:
             raise ValidationError('Username already exists . Please choose a different username')
-    
+
+ #--------------------------------------------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------------------------------------------
 #Login Form
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)], render_kw={"placeholder":"Username"})
 
@@ -24,6 +29,20 @@ class LoginForm(FlaskForm):
 
     submit = SubmitField("Log In")
 
+#--------------------------------------------------------------------------------------------------------------------------------------
+#Comment Form
+class CommentForm(FlaskForm):
+    content = StringField('Your Comment', validators=[DataRequired()])
+    submit = SubmitField('Post Comment')
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+#Reply Form
+
+class ReplyForm(FlaskForm):
+    content = StringField('Your Reply', validators=[DataRequired()])
+    submit = SubmitField('Post Reply')
+
+#--------------------------------------------------------------------------------------------------------------------------------------
 
 #User Info Database
 class User(UserMixin, db.Model):
@@ -35,14 +54,39 @@ class User(UserMixin, db.Model):
 
     comments = db.relationship('Comment', backref='author', lazy=True)
 
+#--------------------------------------------------------------------------------------------------------------------------------------
+
 #Commnets Database
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(500), nullable=False)  # Content of the comment
     created_at = db.Column(db.DateTime, default=datetime.utcnow)  # Timestamp for comment creation
 
+    is_reply = db.Column(db.Boolean, default=False, nullable=False)  # Indicates if the comment is a reply
+    reply_id = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)  # Parent comment ID for replies
+
     # Foreign Key linking to the User table
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image_id = db.Column(db.Integer, db.ForeignKey('gis_model.ID'), nullable=False)  # Associated image
+    user = db.relationship('User', backref='user_comments', lazy=True)  # This allows access to comment.user.username
+    replies = db.relationship(
+        'Comment',
+        backref=db.backref('parent_comment', remote_side=[id]),
+        lazy='dynamic'
+    )
+
+    # Validation before saving to the database
+    def validate(self):
+        if not self.is_reply:
+            self.reply_id = None  # Ensure reply_id is NULL if it's not a reply
+
+    # Overriding the save process to include validation
+    def save(self):
+        self.validate()
+        db.session.add(self)
+        db.session.commit()
+
+#--------------------------------------------------------------------------------------------------------------------------------------
 
 class GIS_Model(db.Model):
     __tablename__ = 'gis_model'
@@ -59,8 +103,10 @@ class GIS_Model(db.Model):
     # One-to-One Relationships
     comp_model = db.relationship('COMP_Model', uselist=False, back_populates='gis_model', cascade='all, delete-orphan')
     analysis_model = db.relationship('ANALYSIS_Model', uselist=False, back_populates='gis_model', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='image', lazy=True)
 
-    
+#--------------------------------------------------------------------------------------------------------------------------------------
+  
 #Image Detail Databse
 class COMP_Model(db.Model):
     __tablename__ = 'comp_model'
@@ -73,6 +119,8 @@ class COMP_Model(db.Model):
 
     # One-to-One Relationship
     gis_model = db.relationship('GIS_Model', back_populates='comp_model')
+
+#--------------------------------------------------------------------------------------------------------------------------------------
 
 #Analysis Model
 class ANALYSIS_Model(db.Model):

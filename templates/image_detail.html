@@ -1,21 +1,42 @@
 {% extends "basic.html" %}
 {% block body %}
 <div class="image-details">
-    <h1>{{ image.Name }}</h1>
-    <img src="{{ url_for('static', filename='Images/' + image.gis_model.ImagePath) }}" alt="{{ image.gis_model.Name }}" style="width: 50%; height: auto;">
+  <h1>{{ image.Name }}</h1>
+  <img
+    src="{{ url_for('static', filename='Images/' + image.gis_model.ImagePath) }}"
+    alt="{{ image.gis_model.Name }}"
+    style="width: 50%; height: auto"
+  />
 
-    <div class="details">
-        <h2>Historical Relevance:</h2>
-        <p>{{ image.Hist_Relevance }}</p>
+  <div class="details">
+    <h2>Historical Relevance:</h2>
+    <p>{{ image.Hist_Relevance }}</p>
 
-        <h2>Modern Importance:</h2>
-        <p>{{ image.Mod_Imp }}</p>
+    <h2>Modern Importance:</h2>
+    <p>{{ image.Mod_Imp }}</p>
 
-        <h2>Comparative Analysis:</h2>
-        <p>{{ image.Comp_Analysis }}</p>
+    <h2>Comparative Analysis:</h2>
+    <p>{{ image.Comp_Analysis }}</p>
 
-        <h2>Special Insight:</h2>
-        <p>{{ image.Insight }}</p>
-    </div>
+    <h2>Special Insight:</h2>
+    <p>{{ image.Insight }}</p>
+  </div>
 </div>
+
+<!-- Add a Comment -->
+<div class="add-comment">
+  <form id="commentForm">
+    <textarea name="content" placeholder="Tell us what you are thinking" required></textarea>
+    <button type="submit">Add Comment</button>
+  </form>
+</div>
+
+<!-- Display Comments -->
+<div class="comments-box">
+  {% for comment in comments %}
+    {% include 'comment.html' %}
+  {% endfor %}
+</div>
+
+<script src="{{ url_for('static', filename='scripts/comment_reply.js') }}"></script>
 {% endblock %}

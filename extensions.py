@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect,request, render_template
+from flask import Flask, url_for, redirect,request, render_template,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_migrate import Migrate
@@ -9,6 +9,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+import json
 
 app= Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///gis.db' 

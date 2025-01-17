@@ -1,0 +1,20 @@
+<div class="comment">
+    <div class="comment-author">{{ comment.user.username }}</div>
+    <div class="comment-content">{{ comment.content }}</div>
+    <small>Posted on {{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+  
+    <!-- Reply Form -->
+    <form class="replyForm">
+      <textarea name="content" placeholder="Reply " required></textarea>
+      <input type="hidden" name="reply_id" value="{{ comment.id }}" />
+      <button type="submit">Reply</button>
+    </form>
+  
+    <!-- Display Replies -->
+    <div class="replies">
+      {% for reply in comment.replies %}
+        {% include 'reply.html' %}
+      {% endfor %}
+    </div>
+  </div>
+  
