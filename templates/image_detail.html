@@ -2,7 +2,7 @@
 {% block body %}
 <div class="image-details">
     <h1>{{ image.Name }}</h1>
-    <img src="{{ url_for('static', filename='Images/' + image.ImagePath) }}" alt="{{ image.Name }}" style="width: 50%; height: auto;">
+    <img src="{{ url_for('static', filename='Images/' + image.gis_model.ImagePath) }}" alt="{{ image.gis_model.Name }}" style="width: 50%; height: auto;">
 
     <div class="details">
         <h2>Historical Relevance:</h2>

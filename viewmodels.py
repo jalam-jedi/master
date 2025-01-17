@@ -4,14 +4,18 @@ from dbclasses import *
 #A model view for comments
 
 class CommentModelView(ModelView):
-
-    column_list = ('id', 'content', 'created_at', 'Comment.author.username')  # 'author.username' accesses the related User's username
+    can_delete=False
+    column_list = ('id', 'content', 'created_at', 'author')  # 'author.username' accesses the related User's username
 
     # Specify which columns you want to see in the form view (when adding/editing a comment)
-    form_columns = ('content', 'created_at', 'author')  # 'author' will display a dropdown of users
+    form_columns = ('content', 'created_at', 'user_id')  # 'author' will display a dropdown of users
 
     # Optionally, you can also define the column labels
-    column_labels = {'content': 'Comment Text', 'created_at': 'Date Created', 'Comment.author.username': 'Author'}
+    column_labels = {'content': 'Comment Text', 'created_at': 'Date Created', 'author.username': 'Author'}
+
+    column_formatters = {
+        'author': lambda v, c, m, p: m.author.username if m.author else 'No author'
+    }
 
     def is_accessible(self):
         return current_user.is_admin

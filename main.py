@@ -49,7 +49,7 @@ def register_page():
 @app.route('/image/<int:image_id>')
 @login_required
 def image_detail(image_id):
-    # Query the GIS_Model table for the image with the given ID
+    # Query the COMP_Model table for the image with the given ID
     image = COMP_Model.query.get_or_404(image_id)
     return render_template('image_detail.html', image=image)
 

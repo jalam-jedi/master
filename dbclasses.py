@@ -44,36 +44,45 @@ class Comment(db.Model):
     # Foreign Key linking to the User table
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-#Main Web Databse
 class GIS_Model(db.Model):
+    __tablename__ = 'gis_model'
+    
     ID = db.Column(db.Integer, primary_key=True)
-    ImagePath= db.Column(db.String(2000),nullable =False)
-    Name = db.Column(db.String(100),nullable =False)
-    Latitude =db.Column(db.Float(20),nullable=False)
-    Longitude = db.Column(db.Float,nullable=False)
-    Comments = db.Column(db.String(1000),nullable=True)
-    Source =db.Column(db.String(50),nullable=True)
-    Date =db.Column(db.DateTime,default =datetime.utcnow)
-
-    comp_images=db.relationship('COMP_Model',backref='gis',lazy=True)
-    analysis_images=db.relationship('Analysis_Model',backref='gis',lazy=True)
-
-#Image Detail Databse
-class COMP_Model(db.Model):
-    ImageID= db.Column(db.Integer,db.ForeignKey('gis_model.id'),primary_key=True)
-    ImagePath= db.Column(db.String(2000),nullable =False)
-    Name = db.Column(db.String(100),nullable =False)
-    Hist_Relevance =db.Column(db.String(500),nullable=False)
-    Mod_Imp= db.Column(db.String(500),nullable=False)
-    Comp_Analysis =db.Column(db.String(500),nullable=False)
-    Insight= db.Column(db.String(500),nullable=False)
-
-#Comaprison Databse
-class ANALYSIS_Model(db.Model):
-    ImageID = db.Column(db.Integer,db.ForeignKey('gis_model.id') ,primary_key=True)
     ImagePath = db.Column(db.String(2000), nullable=False)
     Name = db.Column(db.String(100), nullable=False)
+    Latitude = db.Column(db.Float(20), nullable=False)
+    Longitude = db.Column(db.Float, nullable=False)
+    Comments = db.Column(db.String(1000), nullable=True)
+    Source = db.Column(db.String(50), nullable=True)
+    Date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # One-to-One Relationships
+    comp_model = db.relationship('COMP_Model', uselist=False, back_populates='gis_model', cascade='all, delete-orphan')
+    analysis_model = db.relationship('ANALYSIS_Model', uselist=False, back_populates='gis_model', cascade='all, delete-orphan')
+
+    
+#Image Detail Databse
+class COMP_Model(db.Model):
+    __tablename__ = 'comp_model'
+
+    ImageID = db.Column(db.Integer, db.ForeignKey('gis_model.ID'), primary_key=True)
+    Hist_Relevance = db.Column(db.String(500), nullable=False)
+    Mod_Imp = db.Column(db.String(500), nullable=False)
+    Comp_Analysis = db.Column(db.String(500), nullable=False)
+    Insight = db.Column(db.String(500), nullable=False)
+
+    # One-to-One Relationship
+    gis_model = db.relationship('GIS_Model', back_populates='comp_model')
+
+#Analysis Model
+class ANALYSIS_Model(db.Model):
+    __tablename__ = 'analysis_model'
+
+    ImageID = db.Column(db.Integer, db.ForeignKey('gis_model.ID'), primary_key=True)
     Location_Type = db.Column(db.String(500), nullable=False)
     Unique_Feature = db.Column(db.String(500), nullable=False)
     Geographical_Feature = db.Column(db.String(500), nullable=False)
     Climate = db.Column(db.String(500), nullable=False)
+
+    # One-to-One Relationship
+    gis_model = db.relationship('GIS_Model', back_populates='analysis_model')

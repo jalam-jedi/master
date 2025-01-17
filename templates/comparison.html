@@ -9,7 +9,7 @@
             <select name="image1" id="image1" class="dropdown" required>
                 <option value="">--Select Image--</option>
                 {% for image in images_data %}
-                    <option value="{{ image.ImageID }}">{{ image.Name }}</option>
+                    <option value="{{ image.ImageID }}">{{ image.gis_model.Name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -19,7 +19,7 @@
             <select name="image2" id="image2" class="dropdown" required>
                 <option value="">--Select Image--</option>
                 {% for image in images_data %}
-                    <option value="{{ image.ImageID }}">{{ image.Name }}</option>
+                    <option value="{{ image.ImageID }}">{{ image.gis_model.Name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -38,8 +38,8 @@
         <thead>
             <tr>
                 <th>Attribute</th>
-                <th>{{ image1.Name }}</th>
-                <th>{{ image2.Name }}</th>
+                <th>{{ image1.gis_model.Name }}</th>
+                <th>{{ image2.gis_model.Name }}</th>
             </tr>
         </thead>
         <tbody>
@@ -49,10 +49,10 @@
             <tr>
                 <td><strong>Image</strong></td>
                 <td>
-                    <img src="{{ url_for('static', filename='Images/' + image1.ImagePath) }}" alt="{{ image1.Name }}">
+                    <img src="{{ url_for('static', filename='Images/' + image1.gis_model.ImagePath) }}" alt="{{ image1.gis_model.Name }}">
                 </td>
                 <td>
-                    <img src="{{ url_for('static', filename='Images/' + image2.ImagePath) }}" alt="{{ image2.Name }}">
+                    <img src="{{ url_for('static', filename='Images/' + image2.gis_model.ImagePath) }}" alt="{{ image2.gis_model.Name }}">
                 </td>
             </tr>
 
