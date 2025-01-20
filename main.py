@@ -4,6 +4,7 @@ from viewmodels import *
 
 admin.add_view(UserModelView(User, db.session))
 admin.add_view(CommentModelView(Comment, db.session))
+admin.add_view(GISView(GIS_Model,db.session))
 
 @login_manager.user_loader
 def load_user(user_id):

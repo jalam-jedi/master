@@ -3,6 +3,15 @@ from dbclasses import *
 
 #A model view for comments
 
+class GISView(ModelView):
+    can_create=True
+    can_view_details=True
+
+    column_list =('ID','Name','ImagePath','Latitude','Longitude','Source')
+    column_editable_list = ('Name','ImagePath','Latitude','Longitude','Source')
+    form_columns=('Name','ImagePath','Latitude','Longitude','Source','Date')    
+    column_labels = {'ImagePath':'Path'}
+
 class CommentModelView(ModelView):
     can_delete=False
     column_list = ('id', 'content', 'created_at', 'author')  # 'author.username' accesses the related User's username
